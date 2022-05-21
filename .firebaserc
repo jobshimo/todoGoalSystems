@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "todogoalsystems": {
+      "hosting": {
+        "todoGoalSystems": [
+          "todogoalsystems"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "todogoalsystems"
+  }
+}

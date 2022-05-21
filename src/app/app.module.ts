@@ -8,6 +8,9 @@ import { ItemComponent } from './core/item/item.component';
 import { MainComponent } from './core/main/main.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './core/pages/home/home.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { HomeComponent } from './core/pages/home/home.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]
