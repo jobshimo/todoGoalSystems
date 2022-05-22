@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment.prod';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { MAIN_REDUCER } from '../../main.reducer';
+import { Item } from 'src/app/models/item.model';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -33,5 +34,19 @@ describe('FooterComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Comprueba que se obtiene el numero de items pendientes', () => {
+    component.todosSet = [new Item('test1'), new Item('test2'), new Item('test3','newItem',true), ];
+    const pending = 2;
+    const todos = component.todosGet;
+    expect(component.testGetPending(todos) === pending).toBeTruthy();
+  });
+
+  it('Comprueba que se obtiene un nuevo array con los items compeltados', () => {
+    component.todosSet = [new Item('test1'), new Item('test2','newItem',true), new Item('test3','newItem',true), ];
+    const completed = 2;
+    const todosCompleted = component.testGetCompletedTodos();
+    expect(todosCompleted.every(todo =>todo.completed) && todosCompleted.length === completed).toBeTruthy();
   });
 });

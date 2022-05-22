@@ -22,6 +22,19 @@ export class FooterComponent implements OnInit, OnDestroy {
   public filter  : string | null = null;
   public pending : number = 0;
 
+      // ********Para testing********//
+      set todosSet(todos: Item[]) {
+        this.todos = todos;
+      }
+
+      get todosGet(): Item[] {
+        return this.todos;
+      }
+
+      testGetPending = (todos: Item[]) =>  this.getPending(todos);
+      testGetCompletedTodos = () =>  this.getCompletedTodos();
+      //********Fin********/
+
   constructor(private store: Store<MainState>) { }
 
   ngOnInit(): void {

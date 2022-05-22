@@ -27,6 +27,10 @@ export class MainComponent implements OnInit, OnDestroy {
       set todosSet(todos: Item[]) {
         this.todos = todos;
       }
+
+      get todosGet(): Item[] {
+        return this.todos;
+      }
       testcheckAllCompleted = () =>  this.checkAllCompleted();
       //********Fin********/
 
