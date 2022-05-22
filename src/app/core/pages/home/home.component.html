@@ -1,5 +1,7 @@
 <section class="todoapp">
-    <app-header></app-header>
+    <header class="header">
+        <h1>todos</h1>
+    </header>
     <input (keyup.enter)="saveNewItem()" [(ngModel)]="text" id="#inputheader" class="new-todo" placeholder="What needs to be done?" autofocus>
     <app-main *ngIf="todos.length > 0"></app-main>
     <app-footer *ngIf="todos.length > 0"></app-footer>

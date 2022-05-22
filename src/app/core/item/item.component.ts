@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Item } from '../../models/item.model';
+import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MainState } from '../../main.reducer';
+import { Item } from '../../models/item.model';
 import { deleteTodo, editTodo } from '../../store/todoState/todos.actions';
 
 @Component({
@@ -9,42 +9,38 @@ import { deleteTodo, editTodo } from '../../store/todoState/todos.actions';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent {
 
-  @Input() item!: Item;
+  @Input() item: Item = new Item('newItem');
   @Input() index!: number;
 
-  text: string = ''
-  edit: boolean = false
+  public text: string = ''
+  public edit: boolean = false
   constructor(private store: Store<MainState>) { }
-
-  ngOnInit(): void {
-    console.log(this.item);
-  }
 
   completed = () => {
     this.store.dispatch(editTodo({item: {...this.item, completed: !this.item.completed}}));
     this.setFocus('#inputheader');
   };
 
-  delete    = () => this.store.dispatch(deleteTodo({id: this.item.id}));
+  delete = () => this.store.dispatch(deleteTodo({id: this.item.id}));
 
-  editMode  = ( text:string) =>{
+  editMode = ( text:string) =>{
     this.text = text;
     this.edit = true;
     this.setFocus(`#item${this.index}`);
-  };
+  }
 
   saveEdit  = () => {
     this.store.dispatch(editTodo({item: {...this.item, text: this.text}}));
     this.edit = false;
     this.setFocus('#inputheader');
-  };
+  }
 
   setFocus = (id:string) => {
     setTimeout(() => {
       const element =   document.getElementById(id) as HTMLInputElement;
       element.focus();
     }, 0);
-  };
+  }
 }

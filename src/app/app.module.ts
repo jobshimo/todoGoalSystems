@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { environment } from '../environments/environment';
+
 import { AppComponent } from './app.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ItemComponent } from './core/item/item.component';
 import { MainComponent } from './core/main/main.component';
-import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './core/pages/home/home.component';
+
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MAIN_REDUCER } from './main.reducer';
 import { TodosEffects } from './store/todoState/todo.effects';
-import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,6 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     ItemComponent,
     MainComponent,
-    HeaderComponent,
     HomeComponent
   ],
   imports: [

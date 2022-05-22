@@ -5,13 +5,13 @@ import { Item } from '../models/item.model';
 import { Store } from '@ngrx/store';
 import { MainState } from '../main.reducer';
 import { editTodo, deleteTodo } from '../store/todoState/todos.actions';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  constructor(private db : Firestore, private store: Store<MainState>) { }
-
+    constructor(private db : Firestore, private store: Store<MainState>) { }
 
     // ********Para testing********//
     private collection: string = 'todos'
@@ -25,7 +25,7 @@ export class FirebaseService {
     }
     //********Fin********/
 
-    generateFirestoreId = () : string => doc(collection(this.db, this.collection)).id;
+    private generateFirestoreId = () : string => doc(collection(this.db, this.collection)).id;
 
     setNewItem = ( item: Item ) => {
       const id = new Date().getTime().toString() + this.generateFirestoreId();
@@ -33,10 +33,7 @@ export class FirebaseService {
       return setDoc( newTodo, { ...item, id }, { merge: true });
     };
 
-    setItem = ( item: Item ) => {
-      const newTodo = doc( getFirestore(), this.collection, item.id);
-      return setDoc( newTodo, { ...item }, { merge: true });
-    };
+    setItem = ( item: Item ) => setDoc( doc( getFirestore(), this.collection, item.id), { ...item }, { merge: true });
 
     setMultipleItemsAllCompleted = async ( item: Item[], completed: boolean) =>  item.forEach(( item ) => this.store.dispatch(editTodo({item: {...item, completed: completed}})));
 

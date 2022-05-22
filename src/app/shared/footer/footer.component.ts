@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MainState } from '../../main.reducer';
-import { Observable, Subscription } from 'rxjs';
-import { Item } from '../../models/item.model';
 import { deleteMultiTodo, setFilter } from '../../store/todoState/todos.actions';
+import { selectTodos, selectTodosFilter } from '../../store/todoState/todo.selectors';
+import { Item } from '../../models/item.model';
 
 @Component({
   selector: 'app-footer',
@@ -12,10 +13,14 @@ import { deleteMultiTodo, setFilter } from '../../store/todoState/todos.actions'
 })
 export class FooterComponent implements OnInit, OnDestroy {
 
-  private todos$    : Observable<Item[]> = this.store.select(state => state.todoState.todos);
-  private todosSubs : Subscription = new Subscription();
-  private todos     : Item[] = [];
-  pending : number = 0;
+  private todos$     : Observable<Item[]> = this.store.select(selectTodos);
+  private todosSubs  : Subscription = new Subscription();
+  private todos      : Item[] = [];
+  private filter$    : Observable<string | null> = this.store.select(selectTodosFilter);
+  private filterSubs : Subscription = new Subscription();
+
+  public filter  : string | null = null;
+  public pending : number = 0;
 
   constructor(private store: Store<MainState>) { }
 
@@ -24,6 +29,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       this.todos = todos;
       this.pending = this.getPending(todos)
     });
+    this.filterSubs = this.filter$.subscribe(filter => this.filter = filter);
   }
 
   clearCompleted = ()=> this.store.dispatch(deleteMultiTodo({todos: this.getCompletedTodos()}))
@@ -32,10 +38,11 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   private getCompletedTodos = (): Item[] =>  [...[...this.todos].filter(todo => todo.completed )];
 
-  setfilter = (filter: string) => this.store.dispatch(setFilter({filter}))
+  setfilters = (filter: string) => this.store.dispatch(setFilter({filter}))
 
   ngOnDestroy(): void {
     this.todosSubs?.unsubscribe();
+    this.filterSubs?.unsubscribe();
   }
 
 }

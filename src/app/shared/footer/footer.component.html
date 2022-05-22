@@ -2,13 +2,13 @@
     <span class="todo-count"><strong>{{pending}}</strong> pending<span *ngIf="pending !==1">s</span> </span>
     <ul class="filters">
         <li>
-            <a (click)="setfilter('all')" class="selected filtro" class="selected" routerLink="/home/all">All</a>
+            <a (click)="setfilters('all')" class="filtro" [class.selected]="filter === 'all'" routerLink="/todo/all">All</a>
         </li>
         <li>
-            <a (click)="setfilter('pending')" class="filtro" routerLink="/home/pending">Pendings</a>
+            <a (click)="setfilters('pending')" class="filtro" [class.selected]="filter === 'pending'" routerLink="/todo/pending">Pendings</a>
         </li>
         <li>
-            <a (click)="setfilter('completed')" class="filtro" routerLink="/home/completed">Completed</a>
+            <a (click)="setfilters('completed')" class="filtro" [class.selected]="filter === 'completed'" routerLink="/todo/completed">Completed</a>
         </li>
     </ul>
     <button (click)="clearCompleted()" class="clear-completed">clear Completed</button>

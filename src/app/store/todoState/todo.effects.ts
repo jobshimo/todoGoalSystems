@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { from, of } from "rxjs";
 import { catchError, map, switchMap, take } from "rxjs/operators";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { FirebaseService } from '../../services/firebase.service';
 import { getTodos, getTodosSuccess, getTodosError, editTodo, editTodoSuccess, editTodoError, deleteTodo, deleteTodoSuccess, deleteTodoError, editMultiTodo, addTodo, addTodoSuccess, addTodoError, deleteMultiTodo } from './todos.actions';
 
@@ -24,17 +24,18 @@ export class TodosEffects {
        ),
       ),
     );
+
     newTodo$ = createEffect( () =>
-    this.actions$.pipe(
-      ofType( addTodo ),
-      switchMap( ({item}) =>  from( this.firebaseService.setNewItem(item)).pipe(
-       take( 1 ),
-       map( () => addTodoSuccess() ),
-       catchError( error => of( addTodoError({ error }))),
+      this.actions$.pipe(
+        ofType( addTodo ),
+        switchMap( ({item}) =>  from( this.firebaseService.setNewItem(item)).pipe(
+         take( 1 ),
+         map( () => addTodoSuccess() ),
+         catchError( error => of( addTodoError({ error }))),
+        ),
+       ),
       ),
-     ),
-    ),
-  );
+     );
 
     editTodo$ = createEffect( () =>
       this.actions$.pipe(
@@ -88,41 +89,5 @@ export class TodosEffects {
          map( () => getTodos())
        ),
     );
-
-
-//      setNoteData$ = createEffect( () =>
-//      this.actions$.pipe(
-//       ofType( setAllNotesData ),
-//       switchMap( ({ note }) =>  from(this.firebaseService.setNotes( note )).pipe(
-//        take(1),
-//        map( () => setAllNotesDataSuccess() ),
-//         catchError(error => of( setAllNotesDataError({ error })))
-//       ),
-//     ),
-//   ),
-//  );
-
-//      goHome$ = createEffect( () =>
-//      this.actions$.pipe(
-//       ofType( setAllNotesDataSuccess, setAllNotesDataError ),
-//       map(() => {
-//        this.router.navigate(['/home']);
-//        return goHome();
-//       }
-//      ),
-//     ),
-//   );
-
-//   deleteNote$ = createEffect( () =>
-//      this.actions$.pipe(
-//       ofType( deleteNote ),
-//       switchMap( ({ note }) =>  from( this.firebaseService.deleteNote( note )).pipe(
-//        take(1),
-//        map( () => deleteNoteSuccess() ),
-//         catchError(error => of( deleteNoteError({ error })))
-//       ),
-//     ),
-//   ),
-//  );
 };
 
