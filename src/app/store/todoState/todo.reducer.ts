@@ -20,6 +20,8 @@ export const TodoStateReducer = createReducer(
   on(todoActions.editTodoSuccess, (state: TodoState ) => ({ ...state, loading: false })),
   on(todoActions.editTodoError, (state: TodoState, {error} ) => ({ ...state, error, loading: false })),
   on(todoActions.editMultiTodo, (state: TodoState, {item,completed} ) => ({ ...state, multiLoad: true })),
+
+  on(todoActions.setFilter, (state: TodoState, {filter} ) => ({ ...state, filter })),
   );
 
 

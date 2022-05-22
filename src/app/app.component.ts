@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Item } from './models/item.model';
 import { FirebaseService } from './services/firebase.service';
 import { MainState } from './main.reducer';
 import { getTodos } from './store/todoState/todos.actions';
@@ -11,11 +10,10 @@ import { getTodos } from './store/todoState/todos.actions';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'todoGoalSystems';
-
   constructor(private firebaseService: FirebaseService, private store: Store<MainState>) {}
 
   ngOnInit(): void {
+
     // this.store.dispatch(getTodos())
     // this.firebaseService.setNewItem(new Item('test'));
     this.store.dispatch(getTodos())

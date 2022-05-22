@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { from, of } from "rxjs";
 import { catchError, map, switchMap, take } from "rxjs/operators";
 import { FirebaseService } from '../../services/firebase.service';
-import { getTodos, getTodosSuccess, getTodosError, editTodo, editTodoSuccess, editTodoError, deleteTodo, deleteTodoSuccess, deleteTodoError, editMultiTodo, addTodo, addTodoSuccess, addTodoError } from './todos.actions';
+import { getTodos, getTodosSuccess, getTodosError, editTodo, editTodoSuccess, editTodoError, deleteTodo, deleteTodoSuccess, deleteTodoError, editMultiTodo, addTodo, addTodoSuccess, addTodoError, deleteMultiTodo } from './todos.actions';
 
 
 @Injectable()
@@ -59,6 +59,19 @@ export class TodosEffects {
        ),
       ),
     );
+
+    deleteMultiTodo$ = createEffect( () =>
+    this.actions$.pipe(
+        ofType( deleteMultiTodo ),
+        switchMap( ({todos}) =>  from( this.firebaseService.deleteMultipleItems(todos)).pipe(
+         take( 1 ),
+         map( () => deleteTodoSuccess() ),
+         catchError( error => of( deleteTodoError({ error }))),
+        ),
+       ),
+      ),
+    );
+
     allCompleted$ = createEffect( () =>
     this.actions$.pipe(
         ofType( editMultiTodo ),

@@ -11,10 +11,12 @@ import { Item } from '../../models/item.model';
   DELETE_TODO         = '[Todo State] Delete Todo',
   DELETE_TODO_SUCCESS = '[Todo State] Delete Todo: Success',
   DELETE_TODO_ERROR   = '[Todo State] Delete Todo: Error',
+  DELETE_MULTI_TODO   = '[Todo State] Delete Multi Todo',
   EDIT_TODO           = '[Todo State] Edit Todo',
   EDIT_TODO_SUCCESS   = '[Todo State] Edit Todo: Success',
   EDIT_TODO_ERROR     = '[Todo State] Edit Todo: Error',
   EDIT_MULTI_TODOS    = '[Todo State] Edit Multi Todos',
+  SET_FILTER          = '[Todo State] Set Filter',
 
 }
 
@@ -29,10 +31,13 @@ export const addTodoError   = createAction(Types.ADD_TODO_ERROR, props<{ error: 
 export const deleteTodo        = createAction(Types.DELETE_TODO, props<{ id: string }>() );
 export const deleteTodoSuccess = createAction(Types.DELETE_TODO_SUCCESS );
 export const deleteTodoError   = createAction(Types.DELETE_TODO_ERROR, props<{ error: any }>() );
+export const deleteMultiTodo   = createAction(Types.DELETE_MULTI_TODO, props<{ todos: Item[] }>() );
 
 export const editTodo         = createAction(Types.EDIT_TODO, props<{ item: Item }>() );
 export const editTodoSuccess  = createAction(Types.EDIT_TODO_SUCCESS );
 export const editTodoError    = createAction(Types.EDIT_TODO_ERROR, props<{ error: any }>() );
 export const editMultiTodo    = createAction(Types.EDIT_MULTI_TODOS, props<{ item: Item[], completed: boolean }>() );
+
+export const setFilter        = createAction(Types.SET_FILTER, props<{ filter: string | null }>() );
 
 

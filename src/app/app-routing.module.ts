@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './core/pages/home/home.component';
 
 const routes: Routes = [
-  { path: 'home/:id', component: HomeComponent },
-  { path: '', redirectTo: 'home/def', pathMatch: 'full' },
-  { path: '**', redirectTo: 'home/def', pathMatch: 'full' },
+  { path: 'home/:filter', component: HomeComponent },
+  { path: '', redirectTo: 'home/all', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home/all', pathMatch: 'full' },
 ];
 
 @NgModule({
