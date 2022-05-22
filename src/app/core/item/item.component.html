@@ -1,8 +1,8 @@
-<li class="completed" data-id="abc">
+<li [class.completed]="item.completed" [class.editing]="edit" data-id="abc">
     <div class="view">
-        <input class="toggle" type="checkbox" checked>
-        <label>Test JavaScript</label>
-        <button class="destroy"></button>
+        <input (click)="completed()" class="toggle" type="checkbox" [checked]="item.completed">
+        <label (dblclick)="editMode(item.text)">{{item.text}}</label>
+        <button (click)="delete()" class="destroy"></button>
     </div>
-    <input class="edit" value="Create a TodoMVC template">
+    <input [id]="'#item'+index" autofocus (blur)="saveEdit()" (keyup.enter)="saveEdit()" class="edit" [(ngModel)]="text">
 </li>

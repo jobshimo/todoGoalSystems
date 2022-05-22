@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { collection, doc, Firestore, getDocs, getFirestore, setDoc } from '@angular/fire/firestore';
 import { deleteDoc, query } from 'firebase/firestore';
 import { Item } from '../models/item.model';
+import { Store } from '@ngrx/store';
+import { MainState } from '../main.reducer';
+import {  editTodo } from '../store/todoState/todos.actions';
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  constructor(private db : Firestore,) { }
+  constructor(private db : Firestore, private store: Store<MainState>) { }
 
 
     // ********For testing purposes********//
@@ -27,7 +30,7 @@ export class FirebaseService {
 
     //Function to set a new document//
     setNewItem = ( item: Item ) => {
-      const id = this.generateFirestoreId();
+      const id = new Date().getTime().toString() + this.generateFirestoreId();
       const newTodo = doc( getFirestore(), this.collection, id );
       return setDoc( newTodo, { ...item, id }, { merge: true });
     };
@@ -39,7 +42,7 @@ export class FirebaseService {
     };
 
     //Function to set multiple documents//
-    setMultipleItems = ( item: Item[]) => item.forEach(( item ) => this.setNewItem({...item}));
+    setMultipleItemsAllCompleted = async ( item: Item[], completed: boolean) =>  item.forEach(( item ) => this.store.dispatch(editTodo({item: {...item, completed: completed}})));
 
     //Function to get multiple documents with a custom model//
     getAllTodoItems = async ( ) =>{
@@ -55,8 +58,8 @@ export class FirebaseService {
     };
 
     //Function to delete a document//
-    deleteItem = async ( item: Item ) => await deleteDoc( doc( getFirestore(), this.collection, item.id ));
+    deleteItem = async ( id: string ) => await deleteDoc( doc( getFirestore(), this.collection, id ));
 
     //Function to delete multiple documents//
-    deleteMultipleItems = ( item: Item[] ) =>  item.forEach(( item ) => this.deleteItem({...item}).then(() => console.log('deleted')));
+    deleteMultipleItems = ( item: Item[] ) =>  item.forEach(( item ) => this.deleteItem(item.id).then(() => console.log('deleted')));
 }

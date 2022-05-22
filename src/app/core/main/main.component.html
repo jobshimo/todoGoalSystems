@@ -1,9 +1,13 @@
 <section class="main">
-    <input id="toggle-all" class="toggle-all" type="checkbox">
-    <label for="toggle-all">Mark all as complete</label>
+    <input id="toggle-all" class="toggle-all" [checked]="allCompleted" type="checkbox">
+    <label (click)="saveAllCompleted()" for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
 
-        <app-item></app-item>
+        <ng-container *ngFor="let item of todos; let i= index">
+
+            <app-item [item]="item" [index]="i"></app-item>
+        </ng-container>
+        <!--
         <li>
             <div class="view">
                 <input class="toggle" type="checkbox">
@@ -11,6 +15,6 @@
                 <button class="destroy"></button>
             </div>
             <input class="edit" value="Rule the web">
-        </li>
+        </li> -->
     </ul>
 </section>

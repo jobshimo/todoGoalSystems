@@ -11,6 +11,12 @@ import { HomeComponent } from './core/pages/home/home.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { MAIN_REDUCER } from './main.reducer';
+import { TodosEffects } from './store/todoState/todo.effects';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +30,14 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    StoreModule.forRoot(MAIN_REDUCER),
+    EffectsModule.forRoot([ TodosEffects ]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 100, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+    }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],
