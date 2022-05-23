@@ -4,5 +4,5 @@
         <label (dblclick)="editMode(item.text)">{{item.text}}</label>
         <button (click)="delete()" class="destroy"></button>
     </div>
-    <input [id]="'#item'+index" autofocus (blur)="saveEdit()" (keyup.enter)="saveEdit()" (keyup.esc)="cancelEdit()" class="edit" [(ngModel)]="text">
+    <input [id]="'#item'+index" autofocus (blur)="saveEdit()" (keyup.enter)="saveEdit()" (keydown.esc)="cancelEdit()" class="edit" [(ngModel)]="text">
 </li>

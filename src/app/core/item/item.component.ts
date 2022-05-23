@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { MainState } from '../../main.reducer';
 import { Item } from '../../models/item.model';
 import { deleteTodo, editTodo } from '../../store/todoState/todos.actions';
-import { ckeckStringContent } from '../../shared/shared.funtions';
 
 @Component({
   selector: 'app-item',
@@ -39,13 +38,16 @@ export class ItemComponent {
     this.text = this.originalText;
   }
 
+  ckeckStringContent = (str: string): boolean =>  str.trim().length <= 0;
+
   saveEdit  = () => {
-    if(this.text === '' || ckeckStringContent(this.text)) this.delete();
+    if(!this.edit) return
+    if((this.text === '' || this.ckeckStringContent(this.text))) this.delete();
     else {
       this.store.dispatch(editTodo({item: {...this.item, text: this.text}}));
       this.edit = false;
-      this.setFocus('#inputheader');
     }
+    this.setFocus('#inputheader');
   }
 
   setFocus = (id:string) => {
