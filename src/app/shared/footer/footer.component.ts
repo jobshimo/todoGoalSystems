@@ -19,8 +19,9 @@ export class FooterComponent implements OnInit, OnDestroy {
   private filter$    : Observable<string | null> = this.store.select(selectTodosFilter);
   private filterSubs : Subscription = new Subscription();
 
-  public filter  : string | null = null;
-  public pending : number = 0;
+  public filter    : string | null = null;
+  public pending   : number = 0;
+  public completed : number = 0;
 
       // ********Para testing********//
       set todosSet(todos: Item[]) {
@@ -32,6 +33,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       }
 
       testGetPending = (todos: Item[]) =>  this.getPending(todos);
+      testCompleted  = (todos: Item[]) =>  this.getCompleted(todos);
       testGetCompletedTodos = () =>  this.getCompletedTodos();
       //********Fin********/
 
@@ -40,7 +42,8 @@ export class FooterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.todosSubs = this.todos$.subscribe(todos => {
       this.todos = todos;
-      this.pending = this.getPending(todos)
+      this.pending = this.getPending(todos);
+      this.completed = this.getCompleted(todos);
     });
     this.filterSubs = this.filter$.subscribe(filter => this.filter = filter);
   }
@@ -48,6 +51,8 @@ export class FooterComponent implements OnInit, OnDestroy {
   clearCompleted = ()=> this.store.dispatch(deleteMultiTodo({todos: this.getCompletedTodos()}))
 
   private getPending = (todos: Item[]) => todos.filter(todo => !todo.completed).length;
+
+  private getCompleted = (todos: Item[]) => todos.filter(todo => todo.completed).length;
 
   private getCompletedTodos = (): Item[] =>  [...[...this.todos].filter(todo => todo.completed )];
 

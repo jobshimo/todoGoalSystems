@@ -43,6 +43,13 @@ describe('FooterComponent', () => {
     expect(component.testGetPending(todos) === pending).toBeTruthy();
   });
 
+  it('Comprueba que se obtiene el numero de items completados', () => {
+    component.todosSet = [new Item('test1'), new Item('test2'), new Item('test3','newItem',true), ];
+    const completed = 1;
+    const todos = component.todosGet;
+    expect(component.testCompleted(todos) === completed).toBeTruthy();
+  });
+
   it('Comprueba que se obtiene un nuevo array con los items compeltados', () => {
     component.todosSet = [new Item('test1'), new Item('test2','newItem',true), new Item('test3','newItem',true), ];
     const completed = 2;

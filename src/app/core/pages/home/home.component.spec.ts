@@ -7,6 +7,7 @@ import { MAIN_REDUCER } from '../../../main.reducer';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { environment } from '../../../../environments/environment.prod';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { ckeckStringContent } from '../../../shared/shared.funtions';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -37,6 +38,6 @@ describe('HomeComponent', () => {
 
   it('Detectar string cuyo contenido sea sólo espacios', () => {
     component.text = '   ';
-    expect(component.ckeckStringContent(component.text)).toBeFalsy();
+    expect(ckeckStringContent(component.text)).toBeFalsy();
   });
 });

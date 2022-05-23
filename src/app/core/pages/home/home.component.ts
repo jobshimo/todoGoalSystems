@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MainState } from '../../../main.reducer';
 import { addTodo, setFilter } from '../../../store/todoState/todos.actions';
 import { Item } from '../../../models/item.model';
+import { ckeckStringContent } from '../../../shared/shared.funtions';
 
 @Component({
   selector: 'app-home',
@@ -27,10 +28,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.todosSubs = this.todos$.subscribe(todos =>  this.todos = todos);
   }
 
-  ckeckStringContent = (str: string): boolean =>  str.trim().length > 0;
+
 
   saveNewItem = () => {
-    if(this.text === '' || !this.ckeckStringContent(this.text))return;
+    if(this.text === '' || ckeckStringContent(this.text))return;
     this.store.dispatch(addTodo({item: new Item(this.text)}));
     this.text = '';
   }

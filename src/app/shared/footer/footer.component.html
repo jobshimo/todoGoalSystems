@@ -11,5 +11,5 @@
             <a (click)="setfilters('completed')" class="filtro" [class.selected]="filter === 'completed'" routerLink="/todo/completed">Completed</a>
         </li>
     </ul>
-    <button (click)="clearCompleted()" class="clear-completed">clear Completed</button>
+    <button *ngIf="completed !== 0" (click)="clearCompleted()" class="clear-completed">clear Completed</button>
 </footer>
