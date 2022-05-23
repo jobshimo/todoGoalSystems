@@ -2,7 +2,7 @@
     <input id="toggle-all" class="toggle-all" [checked]="allCompleted" type="checkbox">
     <label (click)="saveAllCompleted()" for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
-        <ng-container *ngFor="let item of todosfilter; let i= index">
+        <ng-container *ngFor="let item of todosfilter; let i= index;">
             <app-item [item]="item" [index]="i"></app-item>
         </ng-container>
     </ul>

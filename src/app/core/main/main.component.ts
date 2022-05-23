@@ -49,7 +49,8 @@ export class MainComponent implements OnInit, OnDestroy {
         });
   }
 
-  trackByFn = (index: number, item: any) => index;
+  // COMPORTAMIENTO NO DESEADO
+  // trackByFn = (index: number, item: any) => index;
 
   saveAllCompleted = () => this.store.dispatch(editMultiTodo({item: this.todos, completed: !this.allCompleted}));
 
